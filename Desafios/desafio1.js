@@ -10,7 +10,7 @@ const UPPERPORCENTAGELIMIT = 20
 const LOWERPORCENTAGELIMIT = 5
 const UPPERTIMELIMIT = 60
 const LOWERTIMELIMIT = 6
-const TYPESOFCLIENTS = new Map();
+const TYPESOFCLIENTS = new Map();//utilizo el map que puede almacenar el par clave-valor en este caso a cada tipo de cliente le toca un descuento
 
 TYPESOFCLIENTS.set("new",0)//expresados en %
 TYPESOFCLIENTS.set("returning", 2)
@@ -44,13 +44,14 @@ function applyDiscount(monthlyPayment, clientType)
 
 function isWithinTheRange( amount,lowerLimit, upperLimit )
 {
-    return lowerLimit >= amount && amount <= upperLimit
+    return amount >= lowerLimit && amount <= upperLimit
 }
 
 // Función principal
 function calculateLoan(amount, rate, term, type) {
     
     let monthlyPayment, totalPayment, totalInterest, discountedTotal
+    let msj
 
     if( ! isWithinTheRange(amount,LOWERLOANLIMIT, UPPERLOANLIMIT) )
         return -1 //damos un codigo de error en los parametros ingresados
@@ -66,9 +67,9 @@ function calculateLoan(amount, rate, term, type) {
 
     monthlyPayment = calculateMonthlyPayment(amount, rate, term)
     totalPayment = calculateTotalPayment(monthlyPayment, term)
-    totalInterest = calculateTotalInterest (totalInterest, amount)
+    totalInterest = calculateTotalInterest (totalPayment, amount)
     discountedTotal = applyDiscount(monthlyPayment, type)
-    
+    return `el total es ${totalPayment}, se paga mensual ${monthlyPayment}, el total de interes es ${totalInterest}, el total mas descuento es ${discountedTotal}`
 }
 
 // Ejecuta el programa y muestra resultados
@@ -76,4 +77,4 @@ function calculateLoan(amount, rate, term, type) {
 //console.log("=== DETALLES DEL PRÉSTAMO ===");
 // Muestra los resultados aquí
 
-console.log(calculateMonthlyPayment(1000, 20, 3))
+console.log( calculateLoan(loanAmount, annualInterestRate, termInMonths, clientType) )
