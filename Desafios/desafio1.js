@@ -10,8 +10,16 @@ const UPPERPORCENTAGELIMIT = 20
 const LOWERPORCENTAGELIMIT = 5
 const UPPERTIMELIMIT = 60
 const LOWERTIMELIMIT = 6
+<<<<<<< HEAD
 const TYPESOFCLIENTS = ["new", "returning", "premium"]//utilizo 2 vectores paralelos, se podria utilizar un hashmap ya que tenemos una relacion de clave valor
 const DISCOUNTS = [0,2,5]
+=======
+const TYPESOFCLIENTS = new Map();//utilizo el map que puede almacenar el par clave-valor en este caso a cada tipo de cliente le toca un descuento
+
+TYPESOFCLIENTS.set("new",0)//expresados en %
+TYPESOFCLIENTS.set("returning", 2)
+TYPESOFCLIENTS.set("premium", 5)
+>>>>>>> 54e361ce4419404911551a37181f5e6a22851f12
 
 function calculateMonthlyPayment(amount, rate, term) //El enunciado expresa term en meses
 {
@@ -48,6 +56,7 @@ function applyDiscount(monthlyPayment, clientType)
 
 function belongsTo ( array, element )
 {
+<<<<<<< HEAD
     return array.includes(element.toLowerCase())
 }
 
@@ -68,12 +77,16 @@ function createmessage(rate, term, amount, monthlyPayment, discountedTotal, tota
     if ( totalInterest > amount / 2  ) //tomo la politica simple de si los intereses son mayores a la mitad del capital solicitado no es tan bueno
         return msg + ` no tan conveniente ya que pagamos mas de la mitad del prestamo en interes.`
     return msg + ` es conveniente ya que el interes es menor al 50% del capital solicitado`
+=======
+    return amount >= lowerLimit && amount <= upperLimit
+>>>>>>> 54e361ce4419404911551a37181f5e6a22851f12
 }
 
 // Función principal
 function calculateLoan(amount, rate, term, type) {
     
     let monthlyPayment, totalPayment, totalInterest, discountedTotal
+    let msj
 
     if( ! isWithinTheRange(amount,LOWERLOANLIMIT, UPPERLOANLIMIT) )
         return -1 //damos un codigo de error en los parametros ingresados
@@ -88,6 +101,7 @@ function calculateLoan(amount, rate, term, type) {
         return -1
 
     monthlyPayment = calculateMonthlyPayment(amount, rate, term)
+<<<<<<< HEAD
     discountedTotal = applyDiscount(monthlyPayment, type)
     totalPayment = calculateTotalPayment(discountedTotal, term)
     totalInterest = calculateTotalInterest (totalPayment, amount)
@@ -98,3 +112,17 @@ function calculateLoan(amount, rate, term, type) {
 const result = calculateLoan(loanAmount, annualInterestRate, termInMonths, clientType);
 console.log("=== DETALLES DEL PRÉSTAMO ===");
 console.log(result)
+=======
+    totalPayment = calculateTotalPayment(monthlyPayment, term)
+    totalInterest = calculateTotalInterest (totalPayment, amount)
+    discountedTotal = applyDiscount(monthlyPayment, type)
+    return `el total es ${totalPayment}, se paga mensual ${monthlyPayment}, el total de interes es ${totalInterest}, el total mas descuento es ${discountedTotal}`
+}
+
+// Ejecuta el programa y muestra resultados
+//const result = calculateLoan(loanAmount, annualInterestRate, termInMonths, clientType);
+//console.log("=== DETALLES DEL PRÉSTAMO ===");
+// Muestra los resultados aquí
+
+console.log( calculateLoan(loanAmount, annualInterestRate, termInMonths, clientType) )
+>>>>>>> 54e361ce4419404911551a37181f5e6a22851f12
