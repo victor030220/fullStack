@@ -1,7 +1,7 @@
 // Datos de entrada (para pruebas)
 const loanAmount = 10000;
 const annualInterestRate = 12;  // 12%
-const termInMonths = 24;
+const termInMonths = 12;
 const clientType = "returning";
 
 const UPPERLOANLIMIT = 50000
@@ -10,11 +10,8 @@ const UPPERPORCENTAGELIMIT = 20
 const LOWERPORCENTAGELIMIT = 5
 const UPPERTIMELIMIT = 60
 const LOWERTIMELIMIT = 6
-const TYPESOFCLIENTS = new Map();
-
-TYPESOFCLIENTS.set("new",0)//expresados en %
-TYPESOFCLIENTS.set("returning", 2)
-TYPESOFCLIENTS.set("premium", 5)
+const TYPESOFCLIENTS = ["new", "returning", "premium"]//utilizo 2 vectores paralelos, se podria utilizar un hashmap ya que tenemos una relacion de clave valor
+const DISCOUNTS = [0,2,5]
 
 function calculateMonthlyPayment(amount, rate, term) //El enunciado expresa term en meses
 {
@@ -36,15 +33,41 @@ function calculateTotalInterest(totalPayment, loanAmount)
 function applyDiscount(monthlyPayment, clientType)
 {
     let discountPorcentage
+    let i
 
-    discountPorcentage = TYPESOFCLIENTS.get(clientType) / 100 //divido por 100 para poder multiplicarlo
-    return monthlyPayment * (1 - discountPorcentage)
+    for(i = 0; i < TYPESOFCLIENTS.length; i = i + 1)
+    {
+        if( TYPESOFCLIENTS[i] == clientType )
+        {
+            discountPorcentage = DISCOUNTS[i] / 100
+            return monthlyPayment * ( 1 - discountPorcentage)
+        }
+    }
 
 }
 
-function isWithinTheRange( amount,lowerLimit, upperLimit )
+function belongsTo ( array, element )
 {
-    return lowerLimit >= amount && amount <= upperLimit
+    return array.includes(element.toLowerCase())
+}
+
+function isWithinTheRange( value,lowerLimit, upperLimit )
+{
+    return value >= lowerLimit && value <= upperLimit
+}
+
+function createmessage(rate, term, amount, monthlyPayment, discountedTotal, totalInterest)
+{
+    let msg
+    msg = `Cuota mensual sin descuento: $${monthlyPayment}\n`
+    msg = msg + `Cuota mensual con descuento: $${discountedTotal}\n`
+    msg = msg + `Total a pagar por los ${term} meses de prestamo: $${discountedTotal * term}\n`
+    msg = msg + `Monto total a pagar de intereses: $${totalInterest}\n`
+    msg = msg + `El prestamo por $${amount} durante ${term} meses con una taza anual del ${rate}% es`
+
+    if ( totalInterest > amount / 2  ) //tomo la politica simple de si los intereses son mayores a la mitad del capital solicitado no es tan bueno
+        return msg + ` no tan conveniente ya que pagamos mas de la mitad del prestamo en interes.`
+    return msg + ` es conveniente ya que el interes es menor al 50% del capital solicitado`
 }
 
 // Función principal
@@ -61,19 +84,17 @@ function calculateLoan(amount, rate, term, type) {
     if( ! isWithinTheRange(term, LOWERTIMELIMIT, UPPERTIMELIMIT) )
         return -1
 
-    if( ! TYPESOFCLIENTS.has(type) )
+    if( ! belongsTo(TYPESOFCLIENTS, type))
         return -1
 
     monthlyPayment = calculateMonthlyPayment(amount, rate, term)
-    totalPayment = calculateTotalPayment(monthlyPayment, term)
-    totalInterest = calculateTotalInterest (totalInterest, amount)
     discountedTotal = applyDiscount(monthlyPayment, type)
-    
+    totalPayment = calculateTotalPayment(discountedTotal, term)
+    totalInterest = calculateTotalInterest (totalPayment, amount)
+    return createmessage(rate, term, amount, monthlyPayment, discountedTotal, totalInterest)
 }
 
 // Ejecuta el programa y muestra resultados
-//const result = calculateLoan(loanAmount, annualInterestRate, termInMonths, clientType);
-//console.log("=== DETALLES DEL PRÉSTAMO ===");
-// Muestra los resultados aquí
-
-console.log(calculateMonthlyPayment(1000, 20, 3))
+const result = calculateLoan(loanAmount, annualInterestRate, termInMonths, clientType);
+console.log("=== DETALLES DEL PRÉSTAMO ===");
+console.log(result)
