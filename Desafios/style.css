@@ -54,18 +54,20 @@ body{
     margin-bottom: 1em;
     padding-left: 2.6em;
     font-size: 23px;
-    background-color: rgb(122, 75, 5);
+    background-color: rgb(83, 36, 16);
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 .ingredients__ul li{
-    margin-top: 0.45em;
-    margin-bottom: 0.45em;
-    color: #FFF;
+    margin-top: 0.6em;
+    margin-bottom: 1em;
+    color: rgb(54, 218, 136);
 }
 
 .ingredients__preparation{
     margin-top: 3em;
     margin-bottom: 3em;
-    padding-left: 0.8em;
+    padding-left: 1.2em;
 }
 
 .ingredients__preparation__h2{
@@ -78,14 +80,15 @@ body{
 .ingredients__preparation__ul{
     margin-bottom: 1em;
     padding-left: 3.1em;
-    max-width: 80ch;
+    max-width: 75ch;
     font-size: 20px;
-    border: 2px dashed
+    border: 2px dashed #3e3af1;
 }
 
 .ingredients__preparation__ul li{
     margin-top: 0.7em;
     margin-bottom: 0.7em;
+    padding-right: 2em;
     font-size: 22px;
 }
 
