@@ -1,0 +1,418 @@
+---
+import "../styles/styleError.css"
+import Modal from "../components/modal.astro"
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Formulario</title>
+	</head>
+	<body>
+		<header class="form__header">
+			<h1 class="form__header__title">Bienvenido al Formulario Validado</h1>
+		</header>
+		<section class="form__note">
+			<h2 class="form__note--text">Complete todos los campos por favor</h2>
+		</section>
+		<form class="form__main" id="myForm__main">
+			<section class="form__main__typeName">
+				<section class="form__main__firstName">
+					<label for="firstName">Nombre: </label>
+					<input type="text" id="firstName" name="firstName">
+				</section>
+				<section class="form__main__lastName">
+					<label for="lastName">Apellido: </label>
+					<input type="text" id="lastName" name="lastName">
+				</section>
+			</section>
+			<section class="form__main__typeUser">
+				<section class="form__main__user">
+					<label for="nameUser">Nombre de Usuario: </label>
+					<input type="text" id="nameUser" name="nameUser">
+				</section>
+				<section class="form__main__password">
+					<label for="password">Contraseña: </label>
+					<input type="password" id="password" name="password">
+				</section>
+				<section class="form__main__password">
+					<label for="confirPass">Confirme su Contraseña: </label>
+					<input type="password" id="confirPass" name="confirPass">
+				</section>
+			</section>
+			<section class="form__main__otherData">
+				<section class="form__main__birthday">
+					<label for="birthday">Fecha de Nacimiento</label>
+					<input type="date" name="birthday" id="birthday">
+				</section>
+				<section class="form__main__confirmation">
+					<label for="confirmation">Es soltera o soltero: </label>
+					<input type="checkbox" id="confirmation" name="confirmation">
+				</section>
+			</section>
+			<section class="form__send">
+				<button class="form__button" id="button__send"  type="submit">
+					Enviar
+				</button>
+			</section>
+		</form>
+		<footer class="footer">
+			<p class="footer__content"> &copy; Victor 2025 Todos los derechos reservados</p>
+		</footer>
+		<Modal id="modal"></Modal>
+	</body>
+</html>
+
+<style>
+	:root{
+		--size-label : 1.25em;
+		--weigth-input: 12em;
+		--size-gap-input-label: 1.3em;
+	}
+
+	*, *::before, *::after{
+		box-sizing: border-box;
+		padding: 0;
+		margin: 0;
+	}
+	body{
+		background-color :oklch(19% 0.0908 273.33);
+		color: oklch(0.49 0.9 146.75);
+		height: 100vh;
+		max-width: 100vw;
+	}
+	.form__header{
+		min-height: 20%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.form__header__title{
+		text-align: center;
+		justify-content: center;
+	}
+	.form__note{
+		height: 10%;
+	}
+	.form__note--text{
+		text-align: center;
+	}
+	.form__main{
+		min-height: 55%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 3em;
+		font-size: 22px;
+	}
+	.form__main__typeName{
+		display: flex;
+		flex-direction: row;
+		gap: 6em;
+		justify-content: center;
+	}
+	.form__main__firstName{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--size-gap-input-label);
+	}
+	.form__main__lastName{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--size-gap-input-label);
+	}
+	.form__main__firstName > label,  .form__main__lastName > label{
+		font-size: var(--size-label);
+	}
+	.form__main__firstName > input, .form__main__lastName > input{
+		width: var(--weigth-input);
+		background-color: oklch(0.37 0.0069 270.64);
+		color: white;
+		border: none;
+		text-align: center;
+		font-size: 1em;
+		font-family:  system-ui;
+		outline-color: red ;
+	}
+	.form__main__typeUser{
+		display: flex;
+		flex-direction: row;
+		gap: 6em;
+		justify-content: center;
+	}
+	.form__main__user{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--size-gap-input-label);
+	}
+	.form__main__password{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--size-gap-input-label);
+	}
+	.form__main__user > label, .form__main__password > label{
+		font-size: var(--size-label);
+	}
+	.form__main__user > input, .form__main__password > input{
+		width: var(--weigth-input);
+		background-color: oklch(0.37 0.0069 270.64);
+		color: white;
+		border: none;
+		text-align: center;
+		font-size: 1em;
+		font-family:  system-ui;
+		outline-color: red ;
+	}
+	.form__main__otherData{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 6em; 
+		justify-content: center;
+	}
+	.form__main__birthday{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--size-gap-input-label);
+	}
+	.form__main__birthday > label{
+		font-size: var(--size-label);
+	}
+	.form__main__birthday > input{
+		background-color:oklch(0.37 0.0069 270.64); ;
+		border: none;
+		height: 2em;
+		width: 9em;
+		text-align: center;
+	}
+	.form__main__confirmation{
+		display: flex;
+		flex-direction: column;
+  		align-items: center;
+  		justify-content: center;
+		gap: var(--size-gap-input-label);
+	}
+	.form__main__confirmation > label{
+		font-size:  var(--size-label);
+	}
+	.form__main__confirmation > input{
+		height: 2em;
+		width: 9em;	
+	}
+	.form__send{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.form__button{
+		min-height: 35px;
+		min-width: 130px;
+		text-align: center;
+		background-color:oklch(0.9 0.15 108.64);
+		color: oklch(0.43 0.0439 192.28);
+		font-size: 19px;
+		border: none;
+	}
+	.form__button:hover{
+		background-color: oklch(0.58 0.1796 27.11);
+		color: white;
+		border: solid 1px;
+		border-color: oklch(0.58 0.1796 27.11);
+		border-radius: 9px;
+	}
+	.footer{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 15%;
+	}
+	.footer__content{
+		font-size: 20px;
+		text-align: center;
+	}
+	@media screen and  (max-width : 1023px) {
+		:root{
+			--size-gap-small : 1em;
+		}
+		.form__main{
+			gap: var(--size-gap-small);
+			font-size: 19px;
+		}
+		.form__main__typeName{
+			flex-direction: column;
+			gap: var(--size-gap-small);
+		}
+		.form__main__typeUser{
+			flex-direction: column;
+			gap: var(--size-gap-small);
+		}
+		.form__main__otherData{
+			flex-direction: column;
+			gap: var(--size-gap-small);
+		}
+		.form__main__firstName > input, .form__main__lastName > input
+		,.form__main__user > input, .form__main__password > input{
+			width: 55%;
+		}
+	}
+	
+</style>
+<script>
+
+	const today = new Date();
+  	const yyyy = today.getFullYear();
+  	const mm = String(today.getMonth() + 1).padStart(2, '0'); // meses 0-11
+  	const dd = String(today.getDate()).padStart(2, '0');
+	const $date = document.getElementById("birthday");
+	const $form__main__firstName = document.getElementById("firstName");
+	const $form__main__lastName = document.getElementById("lastName");
+	const $nameUser = document.getElementById("nameUser");
+	const $password = document.getElementById("password");
+	const $confirPass = document.getElementById("confirPass");
+	const $btnSend = document.getElementById("myForm__main");
+	const $modal = document.getElementById("modal");
+	const $modalClose = document.getElementById("modal__close");
+	const $modalConfir = document.getElementById("modal__confirm");
+	const $modalCancel = document.getElementById("modal__cancel");
+
+  	const fechaActual = `${yyyy}-${mm}-${dd}`;
+  	$date.value = fechaActual;
+
+	function errorMsgName(e){
+		const mensajePrevio = e.target.parentElement.querySelector(".form__mensaje-error--numbers");
+		if (mensajePrevio) mensajePrevio.remove();
+		if( /[0-9]/.test(e.target.value) ){
+			console.log("Ingreso un numero")
+			const mensaje = document.createElement("p");
+			mensaje.textContent = "No se permiten caracteres numericos en este campo.";
+			mensaje.classList.add("form__mensaje-error","form__mensaje-error--numbers");
+			e.target.parentElement.appendChild(mensaje);
+		}
+	}
+
+	function inputNotEmpty (e){
+		const mensajePrevio = e.target.parentElement.querySelector(".form__mensaje-error--notEmpty");
+		if (mensajePrevio) mensajePrevio.remove();
+		if( e.target.value.length === 0 ){
+			const mensaje = document.createElement("p");
+			mensaje.textContent = `Este campo no puede quedar vacio`;
+			mensaje.classList.add("form__mensaje-error","form__mensaje-error--notEmpty");
+			e.target.parentElement.appendChild(mensaje);
+		}
+	}
+
+	function exceedsTheLimitName(e){
+		const maxChar = 25
+		const mensajePrevio = e.target.parentElement.querySelector(".form__mensaje-error--exceeds");
+		if (mensajePrevio) mensajePrevio.remove();
+		if( e.target.value.length > maxChar ){
+			const mensaje = document.createElement("p");
+			mensaje.textContent = `Los caracteres ingresados superan el maximo de ${maxChar}.`;
+			mensaje.classList.add("form__mensaje-error","form__mensaje-error--exceeds");
+			e.target.parentElement.appendChild(mensaje);
+		}
+	}
+	function exceedsTheLimitUSer(e){
+		const maxChar = 35
+		const mensajePrevio = e.target.parentElement.querySelector(".form__mensaje-error--exceedsUser");
+		if (mensajePrevio) mensajePrevio.remove();
+		if( e.target.value.length > maxChar ){
+			const mensaje = document.createElement("p");
+			mensaje.textContent = `Los caracteres ingresados superan el maximo de ${maxChar}.`;
+			mensaje.classList.add("form__mensaje-error","form__mensaje-error--exceedsUser");
+			e.target.parentElement.appendChild(mensaje);
+		}
+	}
+
+	function validCorrecDate (e){
+		const mensajePrevio = e.target.parentElement.querySelector(".form__mensaje-error--dateVali");
+		if( mensajePrevio ) mensajePrevio.remove();
+		if( e.target.value > fechaActual ){
+			const mensaje = document.createElement("p");
+			mensaje.textContent = `La fecha ingresada no puede superar fecha actual.`;
+			mensaje.classList.add("form__mensaje-error","form__mensaje-error--dateVali");
+			e.target.parentElement.appendChild(mensaje);
+		}
+	}
+
+	function overXYearsOld (e){
+		const minYearsOld = 10; //en años
+		const cuurentDate = new Date(e.target.value);
+		const minDate = new Date( today.getFullYear() - minYearsOld, today.getMonth(), today.getDay() );
+		const mensajePrevio = e.target.parentElement.querySelector(".form__mensaje-error--yearsOld");
+		if( mensajePrevio ) mensajePrevio.remove();
+		if( cuurentDate > minDate ){
+			const mensaje = document.createElement("p");
+			mensaje.textContent = `Debes ser mayor a ${minYearsOld} años.`;
+			mensaje.classList.add("form__mensaje-error","form__mensaje-error--yearsOld");
+			e.target.parentElement.appendChild(mensaje);
+		}
+	}
+	function validatePass (e) {
+		const pass = $password.value;
+		const mensajePrevio = e.target.parentElement.querySelector(".form__mensaje-error--valiPass");
+		if( mensajePrevio ) mensajePrevio.remove();
+		if( e.target.value != pass && e.target.value.length > 0 ){
+			const mensaje = document.createElement("p");
+			mensaje.textContent = `La contraseña ingresada no coincide con la anterior`;
+			mensaje.classList.add("form__mensaje-error","form__mensaje-error--valiPass");
+			e.target.parentElement.appendChild(mensaje);
+		}
+	}
+	
+	function validatePassParallel (e){
+		validatePass( {target : $confirPass} )
+	}
+
+	function sendData (e){
+		const errors = $btnSend.querySelectorAll(".form__mensaje-error");
+    	e.preventDefault();
+  		if (errors.length > 0) {
+			alert("Antes de enviar, por favor corrija los datos marcados")
+			return
+		}
+		$modal.showModal();
+		return
+	}
+
+	function confirm (){
+		console.log("Se enviaron los datos con exito")
+		$btnSend.submit()
+		$modal.close();
+	}
+
+	function closeModal (){
+		$modal.close();
+	}
+
+	$form__main__firstName.addEventListener("input", errorMsgName);
+	$form__main__lastName.addEventListener("input", errorMsgName);
+	$form__main__firstName.addEventListener("input", exceedsTheLimitName);
+	$form__main__lastName.addEventListener("input", exceedsTheLimitName);
+	$form__main__firstName.addEventListener("blur", inputNotEmpty);
+	$form__main__lastName.addEventListener("blur", inputNotEmpty);
+	$nameUser.addEventListener("input", exceedsTheLimitUSer);
+	$nameUser.addEventListener("blur", inputNotEmpty);
+	$date.addEventListener("input", validCorrecDate);
+	$date.addEventListener("input", overXYearsOld);
+	$date.addEventListener("blur", overXYearsOld);
+	$password.addEventListener("input", validatePassParallel)
+	$password.addEventListener("blur", inputNotEmpty)
+	$confirPass.addEventListener("input", validatePass);
+	$confirPass.addEventListener("blur", inputNotEmpty);
+	$btnSend.addEventListener("submit", sendData);
+	$modalConfir.addEventListener("click", confirm);
+	$modalClose.addEventListener("click", closeModal);
+	$modalCancel.addEventListener("click", closeModal)
+	$btnSend.addEventListener("submit", () => {console.log("Se esta ejecutanto el submit del enviar")})
+
+</script>
