@@ -13,17 +13,17 @@ let CustomerService = class CustomerService {
     prisma = new prisma_1.PrismaClient();
     async findAll() {
         try {
-            return this.prisma.customer.findMany();
+            return await this.prisma.customer.findMany();
         }
         catch (err) {
             throw err;
         }
     }
     async findOne(id) {
-        return this.prisma.customer.findUnique({ where: { id } });
+        return await this.prisma.customer.findUnique({ where: { id } });
     }
     async createCustomer(customer) {
-        return this.prisma.customer.create({
+        return await this.prisma.customer.create({
             data: { mail: customer.mail, name: customer.name },
         });
     }

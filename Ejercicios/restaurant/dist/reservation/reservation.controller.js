@@ -29,6 +29,7 @@ let ReservationController = class ReservationController {
         return this.reservationService.viewOne(id);
     }
     async createReservation(reservation) {
+        console.log(reservation);
         return this.reservationService.createReservation(reservation);
     }
     async updateReservation(reservation) {
@@ -48,14 +49,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReservationController.prototype, "viewAll", null);
 __decorate([
-    (0, common_1.Get)('viewone'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Get)('viewone/:id'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ReservationController.prototype, "viewOne", null);
 __decorate([
     (0, common_1.Post)('new'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [reservation_create_dto_1.ReservationCreate]),
     __metadata("design:returntype", Promise)

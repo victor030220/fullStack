@@ -12,18 +12,18 @@ const prisma_1 = require("../../generated/prisma/index.js");
 let TableService = class TableService {
     prisma = new prisma_1.PrismaClient();
     async viewAll() {
-        return this.prisma.table.findMany();
+        return await this.prisma.table.findMany();
     }
     async viewOne(id) {
         try {
-            return this.prisma.table.findUnique({ where: { id } });
+            return await this.prisma.table.findUnique({ where: { id } });
         }
         catch (err) {
             throw err;
         }
     }
     async createTable(table) {
-        return this.prisma.table.create({
+        return await this.prisma.table.create({
             data: { ability: table.ability, description: table.description },
         });
     }

@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Delete,
+  Put,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { TableService } from './table.service';
 import { Table } from './dto/table.dto';
 import { TableCreate } from './dto/table-create.dto';
@@ -14,14 +23,14 @@ export class TableController {
     return this.tableService.viewAll();
   }
 
-  @Get('viewone')
+  @Get('viewone/:id')
   public async viewOne(
-    @Body('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
   ): Promise<Table | msjError | null> {
     try {
       return await this.tableService.viewOne(id);
     } catch (err) {
-      return { message: err };
+      return { message: err.meta.value };
     }
   }
 

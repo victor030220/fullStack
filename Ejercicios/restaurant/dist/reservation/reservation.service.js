@@ -12,13 +12,13 @@ const prisma_1 = require("../../generated/prisma/index.js");
 let ReservationService = class ReservationService {
     prisma = new prisma_1.PrismaClient();
     async viewAll() {
-        return this.prisma.reservation.findMany();
+        return await this.prisma.reservation.findMany();
     }
     async viewOne(id) {
-        return this.prisma.reservation.findUnique({ where: { id } });
+        return await this.prisma.reservation.findUnique({ where: { id } });
     }
     async createReservation(reservation) {
-        return this.prisma.reservation.create({
+        return await this.prisma.reservation.create({
             data: {
                 id_Customer: reservation.idCustomer,
                 date: new Date(),

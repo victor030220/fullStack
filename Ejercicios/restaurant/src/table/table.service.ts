@@ -9,19 +9,19 @@ export class TableService {
   private prisma = new PrismaClient();
 
   public async viewAll(): Promise<Table[]> {
-    return this.prisma.table.findMany();
+    return await this.prisma.table.findMany();
   }
 
   public async viewOne(id: number): Promise<Table | null> {
     try {
-      return this.prisma.table.findUnique({ where: { id } });
+      return await this.prisma.table.findUnique({ where: { id } });
     } catch (err) {
       throw err;
     }
   }
 
   public async createTable(table: TableCreate): Promise<Table> {
-    return this.prisma.table.create({
+    return await this.prisma.table.create({
       data: { ability: table.ability, description: table.description },
     });
   }

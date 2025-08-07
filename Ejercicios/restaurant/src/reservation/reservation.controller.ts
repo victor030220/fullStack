@@ -3,10 +3,9 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { Reservation } from './dto/reservation.dto';
@@ -23,15 +22,18 @@ export class ReservationController {
     return this.reservationService.viewAll();
   }
 
-  @Get('viewone')
-  public async viewOne(@Body() id: number): Promise<Reservation | null> {
+  @Get('viewone/:id')
+  public async viewOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Reservation | null> {
     return this.reservationService.viewOne(id);
   }
 
   @Post('new')
   public async createReservation(
-    reservation: ReservationCreate,
+    @Body() reservation: ReservationCreate,
   ): Promise<Reservation> {
+    console.log(reservation);
     return this.reservationService.createReservation(reservation);
   }
 

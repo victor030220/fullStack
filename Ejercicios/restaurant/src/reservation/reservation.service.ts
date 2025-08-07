@@ -9,17 +9,17 @@ export class ReservationService {
   private prisma = new PrismaClient();
 
   public async viewAll(): Promise<Reservation[]> {
-    return this.prisma.reservation.findMany();
+    return await this.prisma.reservation.findMany();
   }
 
   public async viewOne(id: number): Promise<Reservation | null> {
-    return this.prisma.reservation.findUnique({ where: { id } });
+    return await this.prisma.reservation.findUnique({ where: { id } });
   }
 
   public async createReservation(
     reservation: ReservationCreate,
   ): Promise<Reservation> {
-    return this.prisma.reservation.create({
+    return await this.prisma.reservation.create({
       data: {
         id_Customer: reservation.idCustomer,
         date: new Date(),

@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Delete,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { Customer } from './dto/customer.dto';
 import { CustomerCreate } from './dto/customer-create.dto';
@@ -17,8 +26,10 @@ export class CustomerController {
       return { message: err.meta.cause };
     }
   }
-  @Get('viewone')
-  public async viewOne(@Body('id') id: number): Promise<Customer | null> {
+  @Get('viewone/:id')
+  public async viewOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Customer | null> {
     return this.customerService.findOne(id);
   }
 

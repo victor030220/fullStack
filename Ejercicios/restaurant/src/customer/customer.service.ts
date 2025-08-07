@@ -10,18 +10,18 @@ export class CustomerService {
 
   public async findAll(): Promise<Customer[]> {
     try {
-      return this.prisma.customer.findMany();
+      return await this.prisma.customer.findMany();
     } catch (err) {
       throw err;
     }
   }
 
   public async findOne(id: number): Promise<Customer | null> {
-    return this.prisma.customer.findUnique({ where: { id } });
+    return await this.prisma.customer.findUnique({ where: { id } });
   }
 
   public async createCustomer(customer: CustomerCreate): Promise<Customer> {
-    return this.prisma.customer.create({
+    return await this.prisma.customer.create({
       data: { mail: customer.mail, name: customer.name },
     });
   }

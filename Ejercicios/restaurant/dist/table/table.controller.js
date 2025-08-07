@@ -30,7 +30,7 @@ let TableController = class TableController {
             return await this.tableService.viewOne(id);
         }
         catch (err) {
-            return { message: err };
+            return { message: err.meta.value };
         }
     }
     async newTable(table) {
@@ -66,8 +66,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TableController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)('viewone'),
-    __param(0, (0, common_1.Body)('id')),
+    (0, common_1.Get)('viewone/:id'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
